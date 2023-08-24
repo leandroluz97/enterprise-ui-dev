@@ -8,24 +8,28 @@ import { KanbanBoard, defaultStatuses } from '$lib/kanban-board';
  */
 
 describe('Kanban Board', () => {
-  it.todo(
-    'should create a board with a title and an array of default statuses',
-    () => {
-      const title = 'Important Things';
-      const board = new KanbanBoard(title);
+  it('should create a board with a title and an array of default statuses', () => {
+    const title = 'Important Things';
+    const board = new KanbanBoard(title);
 
-      expect.hasAssertions();
-    },
-  );
+    expect(board).toEqual({
+      title,
+      statuses: expect.arrayContaining(defaultStatuses),
+      url: expect.any(String),
+    });
+  });
 
-  it.todo('add a status to a board using #addStatus', () => {
+  it('add a status to a board using #addStatus', () => {
     const title = 'Important Things';
     const status = 'Verifying';
     const board = new KanbanBoard(title);
-
     board.addStatus(status);
 
-    expect.hasAssertions();
+    expect(board).toEqual({
+      title,
+      statuses: expect.arrayContaining([status]),
+      url: expect.any(String),
+    });
 
     // We don't really care what else is in board.statuses.
     // We just want to verify that it has the new status.
@@ -35,7 +39,11 @@ describe('Kanban Board', () => {
     const title = 'Important Things';
     const board = new KanbanBoard(title);
 
-    expect.hasAssertions();
+    expect(board).toEqual(
+      expect.objectContaining({
+        url: 'https://example.com/boards/important-things',
+      }),
+    );
 
     // Challenge: Could you say that I want this to be equal to *any* object
     // so long as it has a `url` property that matches.
